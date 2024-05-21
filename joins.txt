@@ -1,0 +1,87 @@
+//joins
+
+1. Write a query to display all employees along with their department names, excluding employees without a department assigned.
+
+mysql> select *
+    -> from employee as e1 inner join department as d1
+    -> on e1.department_id=d1.department_id;
++------+------------+-----------+---------------+---------------+-----------+
+| E_ID | FIRST_NAME | LAST_NAME | DEPARTMENT_ID | DEPARTMENT_ID | NAME      |
++------+------------+-----------+---------------+---------------+-----------+
+|    1 | AMIT       | GUPTA     |             1 |             1 | HR        |
+|    5 | ARJUN      | KUMAR     |             1 |             1 | HR        |
+|    2 | PRIYA      | SHARMA    |             2 |             2 | MARKETING |
+|    6 | ANJALI     | DESHPANDE |             2 |             2 | MARKETING |
+|    3 | RAHUL      | SINGH     |             3 |             3 | FINANCE   |
+|    7 | VIVEK      | MALHOTRA  |             3 |             3 | FINANCE   |
+|    4 | MEERA      | PATEL     |             4 |             4 | IT        |
++------+------------+-----------+---------------+---------------+-----------+
+7 rows in set (0.00 sec)
+
+2.Write a query to display all employees along with their department names, including employees without department assigned.
+
+mysql> select *
+    -> from employee as e1 left join department as d1
+    -> on e1.department_id=d1.department_id;
++------+------------+-----------+---------------+---------------+-----------+
+| E_ID | FIRST_NAME | LAST_NAME | DEPARTMENT_ID | DEPARTMENT_ID | NAME      |
++------+------------+-----------+---------------+---------------+-----------+
+|    1 | AMIT       | GUPTA     |             1 |             1 | HR        |
+|    2 | PRIYA      | SHARMA    |             2 |             2 | MARKETING |
+|    3 | RAHUL      | SINGH     |             3 |             3 | FINANCE   |
+|    4 | MEERA      | PATEL     |             4 |             4 | IT        |
+|    5 | ARJUN      | KUMAR     |             1 |             1 | HR        |
+|    6 | ANJALI     | DESHPANDE |             2 |             2 | MARKETING |
+|    7 | VIVEK      | MALHOTRA  |             3 |             3 | FINANCE   |
+|    8 | RIYA       | NAIR      |          NULL |          NULL | NULL      |
+|    9 | SURESH     | MENON     |          NULL |          NULL | NULL      |
++------+------------+-----------+---------------+---------------+-----------+
+9 rows in set (0.00 sec)
+
+3.Write a query to display all employees along with their department names, including departments without employee.
+
+mysql> select *
+    -> from employee as e1 right join department as d1
+    -> on e1.department_id=d1.department_id;
++------+------------+-----------+---------------+---------------+------------+
+| E_ID | FIRST_NAME | LAST_NAME | DEPARTMENT_ID | DEPARTMENT_ID | NAME       |
++------+------------+-----------+---------------+---------------+------------+
+|    1 | AMIT       | GUPTA     |             1 |             1 | HR         |
+|    5 | ARJUN      | KUMAR     |             1 |             1 | HR         |
+|    2 | PRIYA      | SHARMA    |             2 |             2 | MARKETING  |
+|    6 | ANJALI     | DESHPANDE |             2 |             2 | MARKETING  |
+|    3 | RAHUL      | SINGH     |             3 |             3 | FINANCE    |
+|    7 | VIVEK      | MALHOTRA  |             3 |             3 | FINANCE    |
+|    4 | MEERA      | PATEL     |             4 |             4 | IT         |
+| NULL | NULL       | NULL      |          NULL |             5 | OPERATIONS |
+| NULL | NULL       | NULL      |          NULL |             6 | LOGISTICS  |
++------+------------+-----------+---------------+---------------+------------+
+9 rows in set (0.00 sec)
+
+4.Write a query to display all employees along with their department names, including employees without department assigned and departments without employee.
+
+mysql> select *
+    -> from employee AS e1
+    -> left outer join department as d1
+    -> on e1.department_id = d1.department_id
+    -> UNION
+    -> select *
+    -> from employee as e2
+    -> right outer join department as d2
+    -> on e2.department_id = d2.department_id;
++------+------------+-----------+---------------+---------------+------------+
+| E_ID | FIRST_NAME | LAST_NAME | DEPARTMENT_ID | DEPARTMENT_ID | NAME       |
++------+------------+-----------+---------------+---------------+------------+
+|    1 | AMIT       | GUPTA     |             1 |             1 | HR         |
+|    2 | PRIYA      | SHARMA    |             2 |             2 | MARKETING  |
+|    3 | RAHUL      | SINGH     |             3 |             3 | FINANCE    |
+|    4 | MEERA      | PATEL     |             4 |             4 | IT         |
+|    5 | ARJUN      | KUMAR     |             1 |             1 | HR         |
+|    6 | ANJALI     | DESHPANDE |             2 |             2 | MARKETING  |
+|    7 | VIVEK      | MALHOTRA  |             3 |             3 | FINANCE    |
+|    8 | RIYA       | NAIR      |          NULL |          NULL | NULL       |
+|    9 | SURESH     | MENON     |          NULL |          NULL | NULL       |
+| NULL | NULL       | NULL      |          NULL |             5 | OPERATIONS |
+| NULL | NULL       | NULL      |          NULL |             6 | LOGISTICS  |
++------+------------+-----------+---------------+---------------+------------+
+11 rows in set (0.00 sec)
